@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/controller"
+	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/infrastructure"
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/initializer"
 
 	gorilla "github.com/gorilla/mux"
@@ -14,6 +15,7 @@ import (
 func init() {
 	// .env fileをloadし、環境変数として扱えるようにする
 	initializer.LoadEnvVariables()
+	infrastructure.ConnectDB()
 }
 
 func main() {

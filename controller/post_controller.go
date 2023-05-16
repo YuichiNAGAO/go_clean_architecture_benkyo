@@ -5,12 +5,11 @@ import (
 	"net/http"
 
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/entity"
-	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/infrastructure"
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/repository"
 )
 
 var (
-	repo = repository.NewPostRepository(infrastructure.DB)
+	repo = repository.NewPostRepository()
 )
 
 func GetPosts(w http.ResponseWriter, r *http.Request) {

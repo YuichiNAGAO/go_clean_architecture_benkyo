@@ -2,7 +2,7 @@ package repository
 
 import (
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/entity"
-	"gorm.io/gorm"
+	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/infrastructure"
 )
 
 type PostRepository interface {
@@ -10,23 +10,22 @@ type PostRepository interface {
 	FindAll() ([]entity.Post, error)
 }
 
-type repo struct {
-	db *gorm.DB
-}
+type repo struct{}
 
-func NewPostRepository(db *gorm.DB) PostRepository {
+func NewPostRepository() PostRepository {
 	return &repo{}
 }
 
 func (repo *repo) Save(post entity.Post) ([]entity.Post, error) {
-	posts := []entity.Post{{Id: 1, Title: "Title 1", Text: "Text 1"}, {Id: 2, Title: "Title 2", Text: "Text 2"}}
-	post.Id = len(posts) + 1
+	var posts []entity.Post
+	infrastructure.DB.Find(&posts)
+	infrastructure.DB.Create(&post)
 	posts = append(posts, post)
 	return posts, nil
 }
 
 func (repo *repo) FindAll() ([]entity.Post, error) {
 	var posts []entity.Post
-	posts = []entity.Post{{Id: 1, Title: "Title 1", Text: "Text 1"}, {Id: 2, Title: "Title 2", Text: "Text 2"}}
+	infrastructure.DB.Find(&posts)
 	return posts, nil
 }
