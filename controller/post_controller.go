@@ -1,4 +1,4 @@
-package main
+package controller
 
 import (
 	"encoding/json"
@@ -12,7 +12,7 @@ var (
 	repo = repository.NewPostRepository()
 )
 
-func getPosts(w http.ResponseWriter, r *http.Request) {
+func GetPosts(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	posts, err := repo.FindAll()
 	result, err := json.Marshal(posts)
@@ -25,7 +25,7 @@ func getPosts(w http.ResponseWriter, r *http.Request) {
 	w.Write(result)
 }
 
-func addPost(w http.ResponseWriter, r *http.Request) {
+func AddPost(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var post entity.Post
 	err := json.NewDecoder(r.Body).Decode(&post)
