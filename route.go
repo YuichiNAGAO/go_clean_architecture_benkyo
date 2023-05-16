@@ -3,20 +3,16 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+
+	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/entity"
 )
 
-type Post struct {
-	Id    int    `json:"id"`
-	Title string `json:"title"`
-	Text  string `json:"text"`
-}
-
 var (
-	posts []Post
+	posts []entity.Post
 )
 
 func init() {
-	posts = []Post{{Id: 1, Title: "Title 1", Text: "Text 1"}, {Id: 2, Title: "Title 2", Text: "Text 2"}}
+	posts = []entity.Post{{Id: 1, Title: "Title 1", Text: "Text 1"}, {Id: 2, Title: "Title 2", Text: "Text 2"}}
 }
 
 func getPosts(w http.ResponseWriter, r *http.Request) {
@@ -33,7 +29,7 @@ func getPosts(w http.ResponseWriter, r *http.Request) {
 
 func addPost(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var post Post
+	var post entity.Post
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
