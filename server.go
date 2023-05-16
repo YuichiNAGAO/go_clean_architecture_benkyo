@@ -6,9 +6,15 @@ import (
 	"net/http"
 
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/controller"
+	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/initializer"
 
 	gorilla "github.com/gorilla/mux"
 )
+
+func init() {
+	// .env fileをloadし、環境変数として扱えるようにする
+	initializer.LoadEnvVariables()
+}
 
 func main() {
 	route := gorilla.NewRouter()

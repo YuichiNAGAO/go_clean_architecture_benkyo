@@ -1,15 +1,20 @@
 package repository
 
-import "github.com/YuichiNAGAO/go_clean_architecture_benkyo/entity"
+import (
+	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/entity"
+	"gorm.io/gorm"
+)
 
 type PostRepository interface {
 	Save(post entity.Post) ([]entity.Post, error)
 	FindAll() ([]entity.Post, error)
 }
 
-type repo struct{}
+type repo struct {
+	db *gorm.DB
+}
 
-func NewPostRepository() PostRepository {
+func NewPostRepository(db *gorm.DB) PostRepository {
 	return &repo{}
 }
 
