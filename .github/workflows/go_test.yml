@@ -49,4 +49,4 @@ jobs:
         run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
 
       - name: Lint
-        run: golangci-lint run
+        run: golangci-lint run --config .golang-ci.yml
