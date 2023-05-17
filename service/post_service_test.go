@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/entity"
@@ -57,4 +58,26 @@ func TestFindAll(t *testing.T) {
 	assert.Equal(t, 1, result[0].Id)
 	assert.Equal(t, "A", result[0].Title)
 	assert.Equal(t, "B", result[0].Text)
+}
+
+func TestCreate(t *testing.T) {
+	mockRepo := new(MockRepository)
+
+	post := entity.Post{Id: 3, Title: "A", Text: "B"}
+	exitsting_post := []entity.Post{{Id: 1, Title: "C", Text: "D"}, {Id: 2, Title: "E", Text: "F"}}
+	exitsting_post = append(exitsting_post, post)
+
+	mockRepo.On("Save").Return(exitsting_post, nil)
+
+	testService := NewPostService(mockRepo)
+
+	result, err := testService.Create(post)
+
+	// Mock Assertion: Behavioral
+	mockRepo.AssertExpectations(t)
+
+	// Data Assertion
+	fmt.Println(result)
+	assert.Equal(t, exitsting_post, result)
+	assert.Nil(t, err)
 }
