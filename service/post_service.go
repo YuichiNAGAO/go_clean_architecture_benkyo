@@ -8,7 +8,7 @@ import (
 )
 
 type PostService interface {
-	Validate(post entity.Post) error
+	Validate(post *entity.Post) error
 	Create(post entity.Post) ([]entity.Post, error)
 	FindAll() ([]entity.Post, error)
 }
@@ -23,7 +23,11 @@ func NewPostService() PostService {
 	return &service{}
 }
 
-func (*service) Validate(post entity.Post) error {
+func (*service) Validate(post *entity.Post) error {
+	if post == nil {
+		err := errors.New("The post is empty")
+		return err
+	}
 	if post.Title == "" {
 		err := errors.New("The post title is empty")
 		return err
