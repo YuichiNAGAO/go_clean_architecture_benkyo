@@ -4,7 +4,9 @@ import (
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/controller"
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/infrastructure"
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/initializer"
+	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/repository"
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/router"
+	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/service"
 )
 
 func init() {
@@ -17,7 +19,9 @@ var (
 	httpRouter = router.NewMuxRouter()
 	// httpRouter = router.NewChiRouter()
 
-	postConrtoller = controller.NewPostController()
+	postRepository = repository.NewPostRepository()
+	postService    = service.NewPostService(postRepository)
+	postConrtoller = controller.NewPostController(postService)
 )
 
 func main() {
