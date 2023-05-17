@@ -13,5 +13,8 @@ func init() {
 }
 
 func main() {
-	infrastructure.DB.AutoMigrate(&entity.Post{})
+	err := infrastructure.DB.AutoMigrate(&entity.Post{})
+	if err != nil {
+		panic("failed to migrate")
+	}
 }
