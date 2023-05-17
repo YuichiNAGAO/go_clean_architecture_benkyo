@@ -2,10 +2,10 @@ package main
 
 import (
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/controller"
+	router "github.com/YuichiNAGAO/go_clean_architecture_benkyo/http"
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/infrastructure"
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/initializer"
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/repository"
-	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/router"
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/service"
 )
 
