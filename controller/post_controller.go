@@ -5,16 +5,16 @@ import (
 	"net/http"
 
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/entity"
-	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/repository"
+	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/service"
 )
 
 var (
-	repo = repository.NewPostRepository()
+	postService = service.NewPostService()
 )
 
 func GetPosts(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	posts, err := repo.FindAll()
+	posts, err := postService.FindAll()
 	result, err := json.Marshal(posts)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -33,7 +33,7 @@ func AddPost(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(`{"message": "Error unmarshalling the request"}`))
 	}
-	posts, err := repo.Save(post)
+	posts, err := postService.Save(post)
 	w.WriteHeader(http.StatusOK)
 	result, err := json.Marshal(posts)
 	w.Write(result)
