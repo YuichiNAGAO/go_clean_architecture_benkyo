@@ -14,7 +14,9 @@ func init() {
 }
 
 var (
-	httpRouter     = router.NewMuxRouter()
+	httpRouter = router.NewMuxRouter()
+	// httpRouter = router.NewChiRouter()
+
 	postConrtoller = controller.NewPostController()
 )
 
