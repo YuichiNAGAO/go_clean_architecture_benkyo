@@ -32,6 +32,13 @@ func AddPost(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(`{"message": "Error unmarshalling the request"}`))
+		return
+	}
+	err = postService.Validate(post)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(`{"message": "` + err.Error() + `"}`))
+		return
 	}
 	posts, err := postService.Create(post)
 	w.WriteHeader(http.StatusOK)
