@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/entity"
+	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/errors"
 	"github.com/YuichiNAGAO/go_clean_architecture_benkyo/service"
 )
 
@@ -15,14 +16,13 @@ var (
 func GetPosts(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	posts, err := postService.FindAll()
-	result, err := json.Marshal(posts)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(`{"message": "Error marshalling the posts array"}`))
+		json.NewEncoder(w).Encode(errors.ServiceError{Message: "Error getting the posts"})
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	w.Write(result)
+	json.NewEncoder(w).Encode(posts)
 }
 
 func AddPost(w http.ResponseWriter, r *http.Request) {
@@ -31,17 +31,21 @@ func AddPost(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(`{"message": "Error unmarshalling the request"}`))
+		json.NewEncoder(w).Encode(errors.ServiceError{Message: "Error marshalling the posts array"})
 		return
 	}
 	err = postService.Validate(&post)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(`{"message": "` + err.Error() + `"}`))
+		json.NewEncoder(w).Encode(errors.ServiceError{Message: err.Error()})
 		return
 	}
 	posts, err := postService.Create(post)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(errors.ServiceError{Message: "Error saving the post"})
+		return
+	}
 	w.WriteHeader(http.StatusOK)
-	result, err := json.Marshal(posts)
-	w.Write(result)
+	json.NewEncoder(w).Encode(posts)
 }
