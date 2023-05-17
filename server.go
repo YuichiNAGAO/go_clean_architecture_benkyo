@@ -19,6 +19,7 @@ var (
 	httpRouter = router.NewMuxRouter()
 	// httpRouter = router.NewChiRouter()
 
+	// 外側からpostRepositoryやpostServiceを呼び出すことで、モックテストができるようになる！
 	postRepository = repository.NewPostRepository()
 	postService    = service.NewPostService(postRepository)
 	postConrtoller = controller.NewPostController(postService)
