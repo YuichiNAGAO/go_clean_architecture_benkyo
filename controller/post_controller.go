@@ -33,7 +33,7 @@ func AddPost(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(`{"message": "Error unmarshalling the request"}`))
 	}
-	posts, err := postService.Save(post)
+	posts, err := postService.Create(post)
 	w.WriteHeader(http.StatusOK)
 	result, err := json.Marshal(posts)
 	w.Write(result)

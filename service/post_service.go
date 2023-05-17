@@ -9,7 +9,7 @@ import (
 
 type PostService interface {
 	Validate(post entity.Post) error
-	Save(post entity.Post) ([]entity.Post, error)
+	Create(post entity.Post) ([]entity.Post, error)
 	FindAll() ([]entity.Post, error)
 }
 
@@ -31,7 +31,7 @@ func (*service) Validate(post entity.Post) error {
 	return nil
 }
 
-func (s *service) Save(post entity.Post) ([]entity.Post, error) {
+func (s *service) Create(post entity.Post) ([]entity.Post, error) {
 	return repo.Save(post)
 }
 
